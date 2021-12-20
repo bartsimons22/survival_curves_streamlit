@@ -1,5 +1,9 @@
 Useful links:
- vscode://vscode.github-authentication/did-authenticate?windowid=1&code=7557ca89b6acb892e68b&state=a3a72445-9962-4998-95d7-1d8033709a49 
-
-  vscode://vscode.github-authentication/did-authenticate?windowid=1&code=7557ca89b6acb892e68b&state=a3a72445-9962-4998-95d7-1d8033709a49 
+</br>
+ https://towardsdatascience.com/deploying-a-streamlit-web-app-with-azure-app-service-1f09a2159743
+ </br>
+ https://discuss.streamlit.io/t/how-to-deploy-streamlit-on-azure/700
+ </br>
+ https://saitracychen.medium.com/deploy-a-streamlit-app-to-azure-126452e7df6d?source=user_profile---------1-------------------------------
+ 
 
