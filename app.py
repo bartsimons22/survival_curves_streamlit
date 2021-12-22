@@ -9,6 +9,12 @@ import time
 from dotenv import load_dotenv
 import os
 
+
+import urllib.request
+import json
+import os
+import ssl
+
 # ------- ENVIRONMENT VARIABLES --------
 load_dotenv()
 
@@ -18,6 +24,9 @@ PORT_NUM = os.environ.get('PORT_NUM')
 DATABASE = os.environ.get('DATABASE')
 UID = os.environ.get('UID')
 PASSWORD = os.environ.get('PASSWORD')
+
+API_URL = os.environ.get('API_URL')
+API_KEY = os.environ.get('API_KEY')
 
 #Title and description
 st.title('Quality Detection Tool /w Survival Curves')
@@ -107,3 +116,42 @@ else:
     st.error('Error! Start date has to be earlier than the stop date! Please try again.')
 
 
+st.title('Bidaf-9 NLP Model')
+st.text('Bidaf is a closed-domain, extractive Q&A model that can only answer factoid questions. \nThese characteristics imply that bidaf requires a context to answer a query. \nThe answer that bidaf returns is always a substring of the provided context.')
+
+#Creating submission form
+with st.form(key='my_form1'):
+    query = st.text_input('query', "What color is the fox")
+    context = st.text_input('context', "The quick brown fox jumped over the lazy dog.")
+    submit_button = st.form_submit_button(label='Submit')
+
+def allowSelfSignedHttps(allowed):
+    # bypass the server certificate verification on client side
+    if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
+        ssl._create_default_https_context = ssl._create_unverified_context
+
+allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
+
+# Request data goes here
+data = {
+    "query": str(query),
+    "context": str(context),
+}
+
+data2 = {
+    "query": "What color is the fox",
+    "context": "The quick brown fox jumped over the lazy dog.",
+}
+body = str.encode(json.dumps(data))
+headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ str(API_KEY))}
+req = urllib.request.Request(API_URL, body, headers)
+
+try:
+    response = urllib.request.urlopen(req)
+
+    result = response.read()
+    st.text(f"The anwser is: {result}")
+except urllib.error.HTTPError as error:
+    print("The request failed with status code: " + str(error.code))
+    print(error.info())
+    print(json.loads(error.read().decode("utf8", 'ignore')))
