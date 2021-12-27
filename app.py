@@ -8,8 +8,6 @@ import pyodbc
 import time
 from dotenv import load_dotenv
 import os
-
-
 import urllib.request
 import json
 import os
