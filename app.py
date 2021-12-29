@@ -48,8 +48,8 @@ with st.form(key='my_form'):
 @st.cache()
 def get_data():
     cnxn = pyodbc.connect(f'Driver={DRIVER};Server={SERVER_NAME},{PORT_NUM};Database={DATABASE};Uid={UID};Pwd={PASSWORD};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;')
-    sql_sales = "SELECT * FROM [SalesLT].[sales]"
-    sql_claims = "SELECT * FROM [SalesLT].[claims]"
+    sql_sales = "SELECT * FROM [dbo].[Sales]"
+    sql_claims = "SELECT * FROM [dbo].[Claims]"
     sales = pd.read_sql(sql_sales,cnxn)
     claims = pd.read_sql(sql_claims, cnxn)
     sales['Date'] = pd.to_datetime(sales['Date'])
